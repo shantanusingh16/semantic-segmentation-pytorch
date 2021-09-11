@@ -113,9 +113,8 @@ def worker(cfg, gpu_id, start_idx, end_idx, result_queue):
 
 
 def main(cfg, gpus):
-    with open(cfg.DATASET.list_val, 'r') as f:
-        lines = f.readlines()
-        num_files = len(lines)
+    lines = cfg.list_test
+    num_files = len(lines)
 
     num_files_per_gpu = math.ceil(num_files / len(gpus))
 
@@ -151,7 +150,7 @@ if __name__ == '__main__':
         'PyTorch>=0.4.0 is required'
 
     parser = argparse.ArgumentParser(
-        description="PyTorch Semantic Segmentation Validation"
+        description="PyTorch Semantic Segmentation Export"
     )
     parser.add_argument(
         "--cfg",
@@ -196,9 +195,9 @@ if __name__ == '__main__':
 
     # absolute paths of model weights
     cfg.MODEL.weights_encoder = os.path.join(
-        cfg.DIR, 'encoder_' + cfg.VAL.checkpoint)
+        cfg.DIR, 'encoder_' + cfg.TEST.checkpoint)
     cfg.MODEL.weights_decoder = os.path.join(
-        cfg.DIR, 'decoder_' + cfg.VAL.checkpoint)
+        cfg.DIR, 'decoder_' + cfg.TEST.checkpoint)
     assert os.path.exists(cfg.MODEL.weights_encoder) and \
         os.path.exists(cfg.MODEL.weights_decoder), "checkpoint does not exitst!"
 
