@@ -1,7 +1,7 @@
 numpy
 scipy
-pytorch==0.4.1
-torchvision
-opencv3
+pytorch==1.9.0
+torchvision==0.10.0
+opencv-python
 yacs
 tqdm

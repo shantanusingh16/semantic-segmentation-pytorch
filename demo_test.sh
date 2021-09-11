@@ -2,12 +2,12 @@
 
 # Image and model names
 TEST_IMG=ADE_val_00001519.jpg
-MODEL_NAME=ade20k-resnet50dilated-ppm_deepsup
+MODEL_NAME=ade20k-hrnetv2-c1
 MODEL_PATH=ckpt/$MODEL_NAME
 RESULT_PATH=./
 
-ENCODER=$MODEL_NAME/encoder_epoch_20.pth
-DECODER=$MODEL_NAME/decoder_epoch_20.pth
+ENCODER=$MODEL_NAME/encoder_epoch_30.pth
+DECODER=$MODEL_NAME/decoder_epoch_30.pth
 
 # Download model weights and image
 if [ ! -e $MODEL_PATH ]; then
@@ -29,9 +29,9 @@ then
 # Inference
 python3 -u test.py \
   --imgs $TEST_IMG \
-  --cfg config/ade20k-resnet50dilated-ppm_deepsup.yaml \
+  --cfg config/ade20k-hrnetv2.yaml \
   DIR $MODEL_PATH \
   TEST.result ./ \
-  TEST.checkpoint epoch_20.pth
+  TEST.checkpoint epoch_30.pth
 
 fi
