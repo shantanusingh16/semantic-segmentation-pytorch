@@ -67,7 +67,7 @@ def evaluate(segmentation_module, loader, cfg, gpu_id, result_queue):
             _, pred = torch.max(scores, dim=1)
             pred = as_numpy(pred.squeeze(0).cpu())
         
-        relpath = os.path.relpath(batch_data['info'], cfg.data_dir).replace('.jpg','.png')
+        relpath = os.path.relpath(batch_data['info'], cfg.data_dir).replace('.jpg','.png').replace('RGB', 'semantics')
         tgt_path = os.path.join(cfg.out_dir,  relpath)
         os.makedirs(os.path.dirname(tgt_path), exist_ok=True)
         cv2.imwrite(tgt_path, pred.astype(np.uint16))
@@ -207,8 +207,8 @@ if __name__ == '__main__':
     for scene in os.listdir(data_dir):
         if not os.path.isdir(os.path.join(data_dir, scene)):
             continue
-        imgs.extend([os.path.join(data_dir, scene, '0', 'left_rgb', filename) \
-            for filename in os.listdir(os.path.join(data_dir, scene, '0', 'left_rgb'))])
+        imgs.extend([os.path.join(data_dir, scene, '0', 'front', 'RGB', filename) \
+            for filename in os.listdir(os.path.join(data_dir, scene, '0', 'front', 'RGB'))])
 
     assert len(imgs), "imgs should be a path to image (.jpg) or directory."
     cfg.list_test = [{'fpath_img': x} for x in imgs]
